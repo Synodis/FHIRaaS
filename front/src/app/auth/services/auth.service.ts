@@ -45,6 +45,7 @@ export class AuthService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Basic ' + basicheader);
     headers = headers.set('Cache-Control', 'no-cache');
+    headers = headers.set('Content-Type', 'application/x-www-form-urlencoded')
 
     return this.http
       .get<any>(this.authApiUrl, {

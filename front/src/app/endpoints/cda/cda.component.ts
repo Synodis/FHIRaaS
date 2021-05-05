@@ -130,11 +130,11 @@ export class CdaComponent implements OnInit {
   })
   }
 
-      // Open a window with the given URL
-      window_open(url: any) {
-        var winReference = window.open();
-        winReference.location = url;
-        winReference.parent.focus();
+    // Open a window with the given URL
+    window_open(url: any) {
+      var winReference = window.open();
+      winReference.location = url;
+      winReference.parent.focus();
     }
 
   // convenience getter for easy access to form fields

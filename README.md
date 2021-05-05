@@ -30,18 +30,14 @@ All can be done throw REST endpoint defined in misc/iris-api-operations.json
 # Getting Started
 1. Build this project, cf Build
 2. The endpoint is : http://localhost:52773/fhiraas/v1/tenants
-3. Create a tenant : PUT http://localhost:52773/fhiraas/v1/tenants/{tenantName}
+3. Create a tenant : POST http://localhost:52773/fhiraas/v1/tenants/{tenantName}
 4. Tenant inforamtion : GET http://localhost:52773/fhiraas/v1/tenants/{tenantName}
 5. The endpoint of the tenant is here : http://localhost:52773/v1/fhiraas/{tenantName}/fhir/r4/endpoint
-6. Post patient in a endpoint : POST http://localhost:52773/v1/fhiraas/{tenantName}/{Format}/{endpointName}/ 
-7. {Format} = For HL7 &rarr; hl7 | For CDA &rarr; cda | For FHIR &rarr; fhir/r4
-8. Update a patient in a tenant : PUT http://localhost:52773/v1/fhiraas/{tenantName}/{Format}/{endpointName}/Patient/{PatientID} 
 
 # Build 
 Run the server
 
 ```sh
-cd FHIRaaS
 docker-compose up -d
 ```
 
@@ -119,23 +115,22 @@ Visual Studio Directory Structure
 
 ```
 .
-├──FHIRaaS
-│   ├── misc
-│   │   ├── samples
-│   │   │   └── hl7 and cda examples
-│   ...
-│   ├── share
-│   │   ├── tenantId
-│   │   │   ├── cda, hl7, sda
-│   │   │   │   └── list of in, out, tmp directories
-│   ...
-│   ├── src
-│   │   ├── FHIRAAS
-│   │   │   ├── API     //API for FHIRAAS
-│   │   │   ├── Utils   //Helper methodes
-│   │   │   ├── HS      //Fix for SDA -> FHIR
-│   │   │   └── Interop //Interop specific developement
-│   ...
+├── misc
+│   ├── samples
+│   │   └── hl7 and cda examples
+...
+├── share
+│   ├── tenantId
+│   │   ├── cda, hl7, sda
+│   │   │   └── list of in, out, tmp directories
+...
+├── src
+│   ├── FHIRAAS
+│   │   ├── API     //API for FHIRAAS
+│   │   ├── Utils   //Helper methodes
+│   │   ├── HS      //Fix for SDA -> FHIR
+│   │   └── Interop //Interop specific developement
+...
 ```
 
  ## Test this module
@@ -145,3 +140,4 @@ Visual Studio Directory Structure
  ```objectscript
  do ##class(%UnitTest.Manager).DebugRunTestCase("","Test.Grongier.JSON.Utils",,)
  ```
+

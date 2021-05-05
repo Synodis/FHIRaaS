@@ -1,0 +1,24 @@
+zn "HSLIB"
+; run installer to create namespace
+Set namespace = "FHIRAAS"
+set pVars = ""
+set pVars("DBInstallDirectory") = "/data/"
+zw ##class(HS.HC.Util.Installer).InstallFoundation("FHIRAAS",.pVars)
+set $namespace="%SYS", name="DefaultSSL" do:'##class(Security.SSLConfigs).Exists(name) ##class(Security.SSLConfigs).Create(name) set url="https://pm.community.intersystems.com/packages/zpm/latest/installer" Do ##class(%Net.URLParser).Parse(url,.comp) set ht = ##class(%Net.HttpRequest).%New(), ht.Server = comp("host"), ht.Port = 443, ht.Https=1, ht.SSLConfiguration=name, st=ht.Get(comp("path")) quit:'st $System.Status.GetErrorText(st) set xml=##class(%File).TempFilename("xml"), tFile = ##class(%Stream.FileBinary).%New(), tFile.Filename = xml do tFile.CopyFromAndSave(ht.HttpResponse.Data) do ht.%Close(), $system.OBJ.Load(xml,"ck") do ##class(%File).Delete(xml)
+
+; import source
+zn namespace
+zw $System.OBJ.ImportDir("/opt/irisapp/src/","*","cdk",.errors,1)
+
+; zpm install openapi class definiton
+zpm
+install objectscript-openapi-definition
+install swagger-ui
+q
+
+zn "%SYS"
+Do ##class(Security.Users).UnExpireUserPasswords("*")
+
+; Create web application ...
+zw ##class(Security.Applications).Import("/opt/irisapp/misc/application-export.xml")
+halt

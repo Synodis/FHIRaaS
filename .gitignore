@@ -1,2 +1,2 @@
-test_post.py
-FHIRaaS_Module/__pycache__/
+.DS_Store
+share/**
